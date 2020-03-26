@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"  th:replace="~{fragments/layout :: layout (~{::body},'vets')}">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>List of Vets</title>
 </head>
 <body>
-$END$
+<h1 th:text="'List of vets'"> Index Page </h1>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>First name</th>
+        <th>Last name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="vet : ${vets}">
+        <td th:text="${vet?.id}">1</td>
+        <td th:text="${vet?.firstName}">F</td>
+        <td th:text="${vet?.lastName}">L</td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

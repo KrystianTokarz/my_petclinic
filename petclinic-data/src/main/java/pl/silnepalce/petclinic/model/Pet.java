@@ -1,34 +1,37 @@
-package model;
+package pl.silnepalce.petclinic.model;
 
+import lombok.*;
+
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
-public class Pet {
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Entity
+@Table(name = "pets")
+public class Pet extends BaseEntity {
+
+    @Column(name = "name")
+    private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "pet_typ_id")
     private PetType petType;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id") //what if set in owner ??
     private Owner owner;
+
+    @Column(name = "birth_day")
     private LocalDate birthDay;
 
-    public PetType getPetType() {
-        return petType;
-    }
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pet")
+    private Set<Visit> visits = new HashSet<>();
 
-    public void setPetType(PetType petType) {
-        this.petType = petType;
-    }
-
-    public Owner getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Owner owner) {
-        this.owner = owner;
-    }
-
-    public LocalDate getBirthDay() {
-        return birthDay;
-    }
-
-    public void setBirthDay(LocalDate birthDay) {
-        this.birthDay = birthDay;
-    }
 }

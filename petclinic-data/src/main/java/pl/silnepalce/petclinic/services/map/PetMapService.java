@@ -1,13 +1,18 @@
 package pl.silnepalce.petclinic.services.map;
 
-import pl.silnepalce.petclinic.model.Owner;
-import pl.silnepalce.petclinic.services.CrudService;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
+import pl.silnepalce.petclinic.model.Pet;
+import pl.silnepalce.petclinic.services.PetService;
 
 import java.util.Set;
 
-public class OwnerMapService extends AbstractMapService<Owner,Long> implements CrudService<Owner,Long> {
+@Service
+@Profile({"default","map"})
+public class PetMapService extends AbstractMapService<Pet,Long> implements PetService {
+
     @Override
-    public Set<Owner> findAll() {
+    public Set<Pet> findAll() {
         return super.findAll();
     }
 
@@ -17,17 +22,17 @@ public class OwnerMapService extends AbstractMapService<Owner,Long> implements C
     }
 
     @Override
-    public void delete(Owner obj) {
+    public void delete(Pet obj) {
         super.delete(obj);
     }
 
     @Override
-    public Owner save(Owner obj) {
-        return super.save(obj.getId(),obj);
+    public Pet save(Pet obj) {
+        return super.save(obj);
     }
 
     @Override
-    public Owner findById(Long id) {
+    public Pet findById(Long id) {
         return super.findById(id);
     }
 }

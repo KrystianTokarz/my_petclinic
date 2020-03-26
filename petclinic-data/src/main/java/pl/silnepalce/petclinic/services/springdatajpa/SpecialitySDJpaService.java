@@ -2,47 +2,47 @@ package pl.silnepalce.petclinic.services.springdatajpa;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-import pl.silnepalce.petclinic.model.Pet;
-import pl.silnepalce.petclinic.repositories.PetRepository;
-import pl.silnepalce.petclinic.services.PetService;
+import pl.silnepalce.petclinic.model.Speciality;
+import pl.silnepalce.petclinic.repositories.SpecialityRepository;
+import pl.silnepalce.petclinic.services.SpecialtyService;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Service
 @Profile("springdatajpa")
-public class PetSDJpaService implements PetService {
+public class SpecialitySDJpaService implements SpecialtyService {
 
-    private final PetRepository petRepository;
+    private final SpecialityRepository specialityRepository;
 
-    public PetSDJpaService(PetRepository petRepository) {
-        this.petRepository = petRepository;
+    public SpecialitySDJpaService(SpecialityRepository specialityRepository) {
+        this.specialityRepository = specialityRepository;
     }
 
     @Override
-    public Set<Pet> findAll() {
-        Set<Pet> pets = new HashSet<>();
-        petRepository.findAll().forEach(pets::add);
+    public Set<Speciality> findAll() {
+        Set<Speciality> pets = new HashSet<>();
+        specialityRepository.findAll().forEach(pets::add);
         return pets;
     }
 
     @Override
-    public Pet findById(Long id) {
-        return petRepository.findById(id).orElse(null);
+    public Speciality findById(Long id) {
+        return specialityRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Pet save(Pet obj) {
-        return petRepository.save(obj);
+    public Speciality save(Speciality obj) {
+        return specialityRepository.save(obj);
     }
 
     @Override
-    public void delete(Pet obj) {
-        petRepository.delete(obj);
+    public void delete(Speciality obj) {
+        specialityRepository.delete(obj);
     }
 
     @Override
     public void deleteById(Long id) {
-        petRepository.deleteById(id);
+        specialityRepository.deleteById(id);
     }
 }

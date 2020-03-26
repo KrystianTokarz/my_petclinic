@@ -1,14 +1,26 @@
 package pl.silnepalce.petclinic.services.map;
 
-import pl.silnepalce.petclinic.model.Pet;
-import pl.silnepalce.petclinic.services.CrudService;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
+import pl.silnepalce.petclinic.model.Speciality;
+import pl.silnepalce.petclinic.model.Vet;
+import pl.silnepalce.petclinic.services.SpecialtyService;
+import pl.silnepalce.petclinic.services.VetService;
 
 import java.util.Set;
 
-public class PetMapService extends AbstractMapService<Pet,Long> implements CrudService<Pet,Long> {
+@Service
+@Profile({"default","map"})
+public class VetMapService extends AbstractMapService<Vet,Long> implements VetService {
+
+    private final SpecialtyService specialtyService;
+
+    public VetMapService(SpecialtyService specialtyService) {
+        this.specialtyService = specialtyService;
+    }
 
     @Override
-    public Set<Pet> findAll() {
+    public Set<Vet> findAll() {
         return super.findAll();
     }
 
@@ -18,17 +30,27 @@ public class PetMapService extends AbstractMapService<Pet,Long> implements CrudS
     }
 
     @Override
-    public void delete(Pet obj) {
+    public void delete(Vet obj) {
         super.delete(obj);
     }
 
     @Override
-    public Pet save(Pet obj) {
-        return super.save(obj.getId(),obj);
+    public Vet save(Vet obj) {
+        if(obj.getSpecialities().size() > 0){
+            obj.getSpecialities().forEach(speciality -> {
+                if(speciality.getId() == null){
+                    Speciality savedSpeciality = specialtyService.save(speciality);
+                    speciality.setId(savedSpeciality.getId());
+                }
+            });
+        }else{
+            return null;
+        }
+        return super.save(obj);
     }
 
     @Override
-    public Pet findById(Long id) {
+    public Vet findById(Long id) {
         return super.findById(id);
     }
 }

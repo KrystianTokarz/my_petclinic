@@ -2,52 +2,47 @@ package pl.silnepalce.petclinic.services.springdatajpa;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-import pl.silnepalce.petclinic.model.Owner;
-import pl.silnepalce.petclinic.repositories.OwnerRepository;
-import pl.silnepalce.petclinic.services.OwnerService;
+import pl.silnepalce.petclinic.model.Vet;
+import pl.silnepalce.petclinic.repositories.VetRepository;
+import pl.silnepalce.petclinic.services.VetService;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Service
 @Profile("springdatajpa")
-public class OwnerSDJpaService implements OwnerService {
+public class VetSDJpaService implements VetService {
 
-    private final OwnerRepository ownerRepository;
+    private final VetRepository vetRepository;
 
-    public OwnerSDJpaService(OwnerRepository ownerRepository) {
-        this.ownerRepository = ownerRepository;
+    public VetSDJpaService(VetRepository vetRepository) {
+        this.vetRepository = vetRepository;
     }
 
     @Override
-    public Owner findByLastName(String lastName) {
-        return ownerRepository.findByLastName(lastName);
+    public Set<Vet> findAll() {
+        Set<Vet> vets = new HashSet<>();
+        vetRepository.findAll().forEach(vets::add);
+        return vets;
     }
 
     @Override
-    public Set<Owner> findAll() {
-        Set<Owner> owners = new HashSet<>();
-        ownerRepository.findAll().forEach(owners::add);
-        return owners;
+    public Vet findById(Long id) {
+        return vetRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Owner findById(Long id) {
-        return ownerRepository.findById(id).orElse(null);
+    public Vet save(Vet obj) {
+        return vetRepository.save(obj);
     }
 
     @Override
-    public Owner save(Owner obj) {
-        return ownerRepository.save(obj);
-    }
-
-    @Override
-    public void delete(Owner obj) {
-        ownerRepository.delete(obj);
+    public void delete(Vet obj) {
+        vetRepository.delete(obj);
     }
 
     @Override
     public void deleteById(Long id) {
-        ownerRepository.deleteById(id);
+        vetRepository.deleteById(id);
     }
 }

@@ -1,14 +1,28 @@
 package pl.silnepalce.petclinic.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import pl.silnepalce.petclinic.services.OwnerService;
 
+@RequestMapping("/owners")
 @Controller
-public class VetController {
+public class OwnerController {
 
-    @RequestMapping({"/vets","/vets/index", "/vets/index.html"})
-    public String index(){
-        return "vets/index";
+    private final OwnerService ownerService;
+
+    public OwnerController(OwnerService ownerService) {
+        this.ownerService = ownerService;
     }
 
+    @RequestMapping({"", "/","/index", "/index.html"})
+    public String index(Model model){
+        model.addAttribute("owners", ownerService.findAll());
+        return "owners/index";
+    }
+
+    @RequestMapping({"/find"})
+    public String find(){
+        return "notimplemented";
+    }
 }

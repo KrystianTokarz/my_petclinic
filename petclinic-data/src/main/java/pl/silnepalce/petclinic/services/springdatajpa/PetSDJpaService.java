@@ -2,47 +2,47 @@ package pl.silnepalce.petclinic.services.springdatajpa;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-import pl.silnepalce.petclinic.model.Vet;
-import pl.silnepalce.petclinic.repositories.VetRepository;
-import pl.silnepalce.petclinic.services.VetService;
+import pl.silnepalce.petclinic.model.Pet;
+import pl.silnepalce.petclinic.repositories.PetRepository;
+import pl.silnepalce.petclinic.services.PetService;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Service
 @Profile("springdatajpa")
-public class VetSDJpaService implements VetService {
+public class PetSDJpaService implements PetService {
 
-    private final VetRepository vetRepository;
+    private final PetRepository petRepository;
 
-    public VetSDJpaService(VetRepository vetRepository) {
-        this.vetRepository = vetRepository;
+    public PetSDJpaService(PetRepository petRepository) {
+        this.petRepository = petRepository;
     }
 
     @Override
-    public Set<Vet> findAll() {
-        Set<Vet> vets = new HashSet<>();
-        vetRepository.findAll().forEach(vets::add);
-        return vets;
+    public Set<Pet> findAll() {
+        Set<Pet> pets = new HashSet<>();
+        petRepository.findAll().forEach(pets::add);
+        return pets;
     }
 
     @Override
-    public Vet findById(Long id) {
-        return vetRepository.findById(id).orElse(null);
+    public Pet findById(Long id) {
+        return petRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Vet save(Vet obj) {
-        return vetRepository.save(obj);
+    public Pet save(Pet obj) {
+        return petRepository.save(obj);
     }
 
     @Override
-    public void delete(Vet obj) {
-        vetRepository.delete(obj);
+    public void delete(Pet obj) {
+        petRepository.delete(obj);
     }
 
     @Override
     public void deleteById(Long id) {
-        vetRepository.deleteById(id);
+        petRepository.deleteById(id);
     }
 }

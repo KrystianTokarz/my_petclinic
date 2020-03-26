@@ -1,4 +1,6 @@
 package pl.silnepalce.petclinic.services;
 
-public class PetService {
+import pl.silnepalce.petclinic.model.Pet;
+
+public interface PetService extends CrudService<Pet, Long> {
 }
